@@ -150,31 +150,20 @@ function todoRemoveUI(e){
       }
       }
       
-      function arama(){
-          const searchText = todoSearch.value.toLowerCase().trim;
-          todoliste=document.querySelectorAll(".list-group-item");
+      function arama() {
+    const searchText = todoSearch.value.toLowerCase().trim();
+    const todolist = document.querySelectorAll(".list-group-item");
 
-          if(todolist.length>0){
-              todoArray.forEach(function(x) {
-                
-               if(x.textContent.toLowerCase().trim.includes(searchText)){
-                    x.setAttiribute("style","display : blok");
-               }
-               else{
-                    x.setAttiribute("style","display : none ");
-               }
-           
-        
-           });
-          }
-         
-         
-          
-          
-       
+    todolist.forEach(function(x) {
+        if (x.textContent.toLowerCase().includes(searchText)) {
+            x.setAttribute("style", "display: block");
+        } else {
+            x.setAttribute("style", "display: none");
+        }
+    });
+}
 
-      }
-   
 
       
+
 
