@@ -1,169 +1,76 @@
-  const form=document.querySelector("#todoAddForm");
-    const addinput=document.querySelector("#todoName");
-      const todolist=document.querySelector(".list-group")
-   
-      const firsCardBody=document.querySelectorAll(".card-body")[0];
-      const SecondCardBody=document.querySelectorAll(".card-body")[1];
-      const clearButton=document.querySelector("#clearButton");
-      const todoSearch=document.querySelector("#todoSearch");
-      const alertdiv=document.querySelector(".al");
-      
-      let todoArray=[];
-      runEvents();
+<!DOCTYPE html>
+<html lang="en">
 
-   function runEvents(){
-      form.addEventListener("submit",todoEkleme);
-      document.addEventListener("DOMContentLoaded", gecmisVerileriUIdegöster);
-      SecondCardBody.addEventListener("click",todoRemoveUI)
-      clearButton.addEventListener("click",allTodoRemoveUI)
-      todoSearch.addEventListener("keyup",arama)
-    
-   }
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-   
+    <title>İnput Eventlari</title>
+</head>
 
-  function todoEkleme(e){
-     e.preventDefault();
-     const metin=addinput.value.trim();
-     if(metin=="" || metin==null){
-        alertt("warning","lutfen todo giriniz");
-     }
-     else{
-         
-     addTodoToIU(metin);
-     addToStrange(metin);
-     alertt("success","todo başarılı");
-    
-     
+<body>
 
+    <div class="container">
+        <div class="row">
+            <div class="card w-100 mt-3">
+                <div class="card-header">
+                    <h5 class="card-title">Todo List Sayfası </h5>
+                </div>
+                <div class="card-body">
+                    <form id="todoAddForm" class="mt-2">
+                
+                        <input type="text" class="form-control mt-2" id="todoName" aria-describedby="todo"
+                            placeholder="Todo Giriniz">
 
+                        <button id="todoAddButton" type="submit" class="btn btn-primary mt-4 btn-sm">
+                            Todo Ekleyin</button>
+                    </form>
+                   
+                    <hr>
 
-     }
-      
-     addinput.value=""
-    
-  }
+                </div>
 
-  function addTodoToIU(toddo){
-     const li=document.createElement("li");
-      li.textContent=toddo;
-      li.className="list-group-item d-flex justify-content-between";
+                <hr />
 
-      const i=document.createElement("i");
-      const a=document.createElement("a");
-      a.className="delete-item";
-      a.href="#";
-      i.className="fa fa-remove";
-      a.appendChild(i);
-      li.appendChild(a);
-      todolist.appendChild(li);
-  }
-  
- 
-   
-   function addToStrange(todo){
-     checkArray();
-     todoArray.push(todo);
-      localStorage.setItem("todoArray", JSON.stringify(todoArray)); 
+                <div class="card-body">
+                    <h5 class="card-title">Todo Listesi</h5>
+                    <form name="form2" id="todoListForm">
+                        <input id="todoSearch" type="text" class="form-control mt-3" placeholder="Todo Arayınız">
+                        <hr />
+                    </form>
 
-   }
- 
+                    <ul class="list-group">
+                        <!--
+                        <li class="list-group-item d-flex justify-content-between">Todo 1
+                            <a href="#" class="delete-item">
+                                <i class="fa fa-remove"></i>
+                            </a>
+                        </li>
+                    -->
+                      </ul>
+
+                        <a href="#" id="clearButton" class="btn btn-primary btn-sm mt-3">Tüm Todoları Temizle</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
-   function checkArray(){
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="index.js"></script>
+</body>
 
-    if((localStorage.getItem("todoArray"))===null)
-    {todoArray=[]}
-    else{
-           todoArray=JSON.parse(localStorage.getItem("todoArray"));
-    }
-    
-
-   }
- 
-   function alertt(type,val){
-      const divv=document.createElement("div");
-      firsCardBody.appendChild(divv);
-    // divv.className="alert alert-"+type; 
-       divv.className = `alert alert-${type} fade show`;
-     divv.textContent=val;
-  
-       setTimeout(() => {
-    divv.classList.remove("show"); // fade-out başlar
-  }, 2000);
-
-  // 3 saniye sonra tamamen kaldır
-  setTimeout(() => {
-    divv.remove();
-  }, 3000);
-         
-   }
-
-function gecmisVerileriUIdegöster(){
-  checkArray();
- todoArray.forEach(function(x) {
-    addTodoToIU(x);
-    
-});
-
-}
-
-
-function todoRemoveUI(e){
-      if(e.target.className=="fa fa-remove"){
-         const lii = e.target.parentElement.parentElement;
-         lii.remove();
-         alertt("dark","todo basarıyla kaldırıldı");
-         todoRemoveStorage(lii.textContent);
-      }
-   }
-
-   function todoRemoveStorage(todotext){
-      checkArray();
-
-       todoArray.forEach (function(element,index){
-           if(element===todotext){
-             todoArray.splice(index,1);
-           }
-          
-       })
-       localStorage.setItem("todoArray",JSON.stringify(todoArray));
-  
-       
-   }
-  
-   function allTodoRemoveUI(e){
-      const todolistesi=document.querySelectorAll(".list-group-item");
-      if(todolistesi.length>0){
-         todolistesi.forEach(function(todo) {
-            todo.remove();
-           
-            
-         });
-          todoArray=[];
-            localStorage.setItem("todoArray",JSON.stringify(todoArray));
-         alertt("success","todo listesi basarıyla silindi");
-      }
-      else{
-             alertt("warning","Silinecek todo listesi bulunamadı");
-      }
-      }
-      
-      function arama() {
-    const searchText = todoSearch.value.toLowerCase().trim();
-    const todolist = document.querySelectorAll(".list-group-item");
-
-    todolist.forEach(function(x) {
-        if (x.textContent.toLowerCase().includes(searchText)) {
-            x.setAttribute("style", "display: block");
-        } else {
-            x.setAttribute("style", "display: none");
-        }
-    });
-}
-
-
-      
-
-
+</html>
